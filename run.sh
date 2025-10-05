@@ -6,6 +6,7 @@ OUT_DIR="tmp"
 
 mkdir -p "$OUT_DIR"
 
+find "$SRC_DIR" -type f -name "*.java" -exec vim -es -c "set nobomb | wq" {} \;
 find "$SRC_DIR" -name "*.java" > "$OUT_DIR/sources"
 javac -d "$OUT_DIR" @"$OUT_DIR/sources"
 rm "$OUT_DIR/sources"
