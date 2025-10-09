@@ -1,13 +1,17 @@
 package game.ui;
 
+import game.utils.Constants;
 import javax.swing.JFrame;
 
 public class GameFrame extends JFrame {
     
     public GameFrame() {
+        int frameX = Constants.DEFAULT_WINDOW_SIZE.x;
+        int frameY = Constants.DEFAULT_WINDOW_SIZE.y;
+
         setTitle("PCMAN");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 500);
+        setSize(frameX, frameY);
 
         setResizable(true);
         setLocationRelativeTo(null);
