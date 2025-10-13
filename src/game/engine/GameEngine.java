@@ -26,7 +26,7 @@ public class GameEngine implements Runnable {
     @Override
     public void run() {
         while (running) {
-            // do something
+            panel.repaint();
             try {
                 Thread.sleep(refreshRate);
             } catch (InterruptedException e) {
