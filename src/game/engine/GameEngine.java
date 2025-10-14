@@ -4,7 +4,8 @@ import game.ui.GameFrame;
 import game.ui.GamePanel;
 
 public class GameEngine implements Runnable {
-    private static final int FPS = 60;
+    private static final int FPS = Constants.FPS;
+    private static final int TPS = Constants.TPS;
     private static final int refreshRate = 1000 / FPS;
 
     private Thread thread;
