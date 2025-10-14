@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-import game.entities.Board;
 import game.entities.Player;
+import game.world.Board;
 
 public class GamePanel extends JPanel {
     private final Player player;

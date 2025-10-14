@@ -1,6 +1,7 @@
 package game.entities;
 
 import game.utils.Tuple;
+import game.world.Board;
 import game.utils.Animation;
 import game.utils.Constants;
 

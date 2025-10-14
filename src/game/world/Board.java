@@ -1,4 +1,4 @@
-package game.entities;
+package game.world;
 
 public class Board {
     public static final int[][] map = {
