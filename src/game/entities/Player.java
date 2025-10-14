@@ -2,6 +2,7 @@ package game.entities;
 
 import game.utils.Tuple;
 import game.world.Board;
+import game.world.sprites.PlayerSprite;
 import game.utils.Animation;
 import game.utils.Constants;
 
@@ -69,22 +70,22 @@ public class Player {
     public void pickAnimationSet() {
         switch (playerHealth) {
             case 3:
-                goLeft = new Animation(Constants.FULL_HP_LEFT, ANIMATION_SPEED);
-                goRight = new Animation(Constants.FULL_HP_RIGHT, ANIMATION_SPEED);
-                goUp = new Animation(Constants.FULL_HP_UP, ANIMATION_SPEED);
-                goDown = new Animation(Constants.FULL_HP_DOWN, ANIMATION_SPEED);
+                goLeft = new Animation(PlayerSprite.FULL_HP_LEFT, ANIMATION_SPEED);
+                goRight = new Animation(PlayerSprite.FULL_HP_RIGHT, ANIMATION_SPEED);
+                goUp = new Animation(PlayerSprite.FULL_HP_UP, ANIMATION_SPEED);
+                goDown = new Animation(PlayerSprite.FULL_HP_DOWN, ANIMATION_SPEED);
                 break;
             case 2:
-                goLeft = new Animation(Constants.HALF_HP_LEFT, ANIMATION_SPEED);
-                goRight = new Animation(Constants.HALF_HP_RIGHT, ANIMATION_SPEED);
-                goUp = new Animation(Constants.HALF_HP_UP, ANIMATION_SPEED);
-                goDown = new Animation(Constants.HALF_HP_DOWN, ANIMATION_SPEED);
+                goLeft = new Animation(PlayerSprite.HALF_HP_LEFT, ANIMATION_SPEED);
+                goRight = new Animation(PlayerSprite.HALF_HP_RIGHT, ANIMATION_SPEED);
+                goUp = new Animation(PlayerSprite.HALF_HP_UP, ANIMATION_SPEED);
+                goDown = new Animation(PlayerSprite.HALF_HP_DOWN, ANIMATION_SPEED);
                 break;
             case 1:
-                goLeft = new Animation(Constants.LOW_HP_LEFT, ANIMATION_SPEED);
-                goRight = new Animation(Constants.LOW_HP_RIGHT, ANIMATION_SPEED);
-                goUp = new Animation(Constants.LOW_HP_UP, ANIMATION_SPEED);
-                goDown = new Animation(Constants.LOW_HP_DOWN, ANIMATION_SPEED);
+                goLeft = new Animation(PlayerSprite.LOW_HP_LEFT, ANIMATION_SPEED);
+                goRight = new Animation(PlayerSprite.LOW_HP_RIGHT, ANIMATION_SPEED);
+                goUp = new Animation(PlayerSprite.LOW_HP_UP, ANIMATION_SPEED);
+                goDown = new Animation(PlayerSprite.LOW_HP_DOWN, ANIMATION_SPEED);
                 break;
             default:
                 break;
