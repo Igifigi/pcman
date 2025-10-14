@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 public class GameFrame extends JFrame {
     
     public GameFrame() {
-        int frameX = Constants.DEFAULT_WINDOW_SIZE.x;
-        int frameY = Constants.DEFAULT_WINDOW_SIZE.y;
+        int frameX = Constants.DEFAULT_WINDOW_SIZE.first;
+        int frameY = Constants.DEFAULT_WINDOW_SIZE.second;
 
         setTitle("PCMAN");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
