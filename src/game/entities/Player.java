@@ -1,10 +1,11 @@
 package game.entities;
 
-import game.utils.Tuple;
 import game.world.Board;
 import game.world.sprites.PlayerSprite;
 import game.utils.Animation;
 import game.utils.Constants;
+import game.utils.Direction;
+import game.utils.Tuple;
 
 public class Player {
     // eager init due to multithreading
@@ -12,7 +13,7 @@ public class Player {
     private static Player instance = new Player();
     private Tuple boardPosition = new Tuple(1, 1);
     private Tuple movement = new Tuple(0, 0);
-    private Tuple desiredMovement = new Tuple(0, 0);
+    private Direction desiredMovement = Direction.NONE;
     static final Tuple size = new Tuple(32, 32);
 
     private static final int ANIMATION_SPEED = Constants.ANIMATION_SPEED;
@@ -50,15 +51,24 @@ public class Player {
         return Board.map[boardPosition.second + dy][boardPosition.first + dx] == 0;
     }
 
-    public void setDesiredMovement(int dx, int dy) {
-        desiredMovement.first = dx;
-        desiredMovement.second = dy;
+    public void setDesiredMovement(Direction direction) {
+        desiredMovement = direction;
     }
 
     public void updateLocation() {
-        if (this.canGoThere(desiredMovement.first, desiredMovement.second)) {
-            movement.first = desiredMovement.first;
-            movement.second = desiredMovement.second;
+        // teleport L -> R
+        if (this.boardPosition.first <= 0 && this.boardPosition.second == 14 && desiredMovement.equals(Direction.LEFT)) {
+            this.boardPosition.first = 27;
+        }
+
+        // teleport R -> L
+        if (this.boardPosition.first >= 27 && this.boardPosition.second == 14 && desiredMovement.equals(Direction.RIGHT)) {
+            this.boardPosition.first = 0;
+        }
+        
+        if (this.canGoThere(desiredMovement.dx(), desiredMovement.dy())) {
+            movement.first = desiredMovement.dx();
+            movement.second = desiredMovement.dy();
         }
 
         if (this.canGoThere(movement.first, movement.second)) {
