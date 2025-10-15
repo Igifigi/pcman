@@ -36,5 +36,6 @@ public final class WallSprite {
     }
 
     public static final BufferedImage[] WALLS = getWalls();
+    public static final BufferedImage EMPTY_TILE = SpriteSheet.getSprite(15, 2);
 
 }
