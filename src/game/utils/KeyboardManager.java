@@ -11,13 +11,13 @@ public class KeyboardManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_W) {
-            player.setDesiredMovement(0, -1);
+            player.setDesiredMovement(Direction.UP);
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
-            player.setDesiredMovement(0, 1);
+            player.setDesiredMovement(Direction.DOWN);
         } else if (e.getKeyCode() == KeyEvent.VK_A) {
-            player.setDesiredMovement(-1, 0);
+            player.setDesiredMovement(Direction.LEFT);
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            player.setDesiredMovement(1, 0);
+            player.setDesiredMovement(Direction.RIGHT);
         }
     }
 
