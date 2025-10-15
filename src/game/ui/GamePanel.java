@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import game.entities.Player;
 import game.world.Board;
+import game.world.sprites.WallSprite;
 
 public class GamePanel extends JPanel {
     private final Player player;
@@ -55,9 +56,17 @@ public class GamePanel extends JPanel {
         // draw board
         for (int row = 0; row < Board.getHeight(); row++) {
             for (int col = 0; col < Board.getWidth(); col++) {
-                g.setColor((Board.map[row][col] == 1) ? Color.BLACK : Color.WHITE);
-                g.fillRect(boardX + 32 * col, +32 * row, 32, 32);
+                int tileX = boardX + 32 * col;
+                int tileY = boardY + 32 * row;
+                if (Board.map[row][col] == 1) {
+                    // wall
+                    g.drawImage(WallSprite.WALLS[1], tileX, tileY, null);
+                    // temporary -> change to desired wall (!!!)
+                } else {
+                    // not wall
+                    g.drawImage(WallSprite.EMPTY_TILE, tileX, tileY, null);
 
+                }
             }
         }
 
