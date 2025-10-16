@@ -1,11 +1,11 @@
 package game.ui;
 
+import game.entities.Player;
+import game.world.Board;
+import game.world.sprites.WallSprite;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
-
-import game.entities.Player;
-import game.world.Board;
 
 public class GamePanel extends JPanel {
     private final Player player;
@@ -52,12 +52,17 @@ public class GamePanel extends JPanel {
         g.setColor(Color.BLUE);
         g.fillRect(boardX, boardY, rectWidth, rectHeight);
 
-        // draw board
         for (int row = 0; row < Board.getHeight(); row++) {
             for (int col = 0; col < Board.getWidth(); col++) {
-                g.setColor((Board.map[row][col] == 1) ? Color.BLACK : Color.WHITE);
-                g.fillRect(boardX + 32 * col, +32 * row, 32, 32);
-
+                int tileX = boardX + 32 * col;
+                int tileY = boardY + 32 * row;
+                if (Board.map[row][col] == 1) {
+                    // wall
+                    g.drawImage(WallSprite.getWallTile(Board.getWallType(row, col)), tileX, tileY, null);
+                } else {
+                    // not wall
+                    g.drawImage(WallSprite.EMPTY_TILE, tileX, tileY, null);
+                }
             }
         }
 

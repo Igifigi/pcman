@@ -7,7 +7,7 @@ public final class Constants {
 
     /*-------------------SPRITES-------------------- */
     public static final int TILE_SIZE = 32;
-    public static final String SPRITE_SHEET_FILENAME = "src/resources/textures/sprites.png";
+    public static final String SPRITE_SHEET_FILENAME = "src/resources/textures/spritesheet.png";
 
     public static final int ANIMATION_SPEED = 10;
     
