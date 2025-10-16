@@ -52,39 +52,16 @@ public class GamePanel extends JPanel {
         g.setColor(Color.BLUE);
         g.fillRect(boardX, boardY, rectWidth, rectHeight);
 
-
-        //test
-
-        // WallSprite.testShit();
-        
-        // for ()
-
-        // draw board
-
-        //int k = 0;
         for (int row = 0; row < Board.getHeight(); row++) {
             for (int col = 0; col < Board.getWidth(); col++) {
                 int tileX = boardX + 32 * col;
                 int tileY = boardY + 32 * row;
-                
-                // System.out.println(boardX + " " + boardY);
-                // System.out.println();
-                if (col == 1 && row == 1) {
-                }
                 if (Board.map[row][col] == 1) {
                     // wall
-                    // g.drawImage(WallSprite.EMPTY_TILE, tileX, tileY, null);
                     g.drawImage(WallSprite.getWallTile(Board.getWallType(row, col)), tileX, tileY, null);
-                    //g.drawImage(WallSprite.getWallTile(k%17), tileX, tileY, null);
-                    //k++;
-
-
-                    // g.drawImage(WallSprite.getWallTile(Board.getWallType(col, row)), tileX, tileY, null);
-                    // temporary -> change to desired wall (!!!)
                 } else {
                     // not wall
                     g.drawImage(WallSprite.EMPTY_TILE, tileX, tileY, null);
-
                 }
             }
         }

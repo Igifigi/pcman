@@ -80,4 +80,5 @@ public class Board {
     public static int getWallType(int boardX, int boardY) {
         return walls[boardX][boardY];
     }
+    
 }
