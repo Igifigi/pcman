@@ -2,6 +2,7 @@ package game.ui;
 
 import game.entities.Player;
 import game.world.Board;
+import game.world.sprites.OrbSprite;
 import game.world.sprites.WallSprite;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -61,7 +62,19 @@ public class GamePanel extends JPanel {
                     g.drawImage(WallSprite.getWallTile(Board.getWallType(row, col)), tileX, tileY, null);
                 } else {
                     // not wall
-                    g.drawImage(WallSprite.EMPTY_TILE, tileX, tileY, null);
+                    int pathType = Board.getOrbType(row, col);
+                    switch (pathType) {
+                        case 1:
+                            g.drawImage(OrbSprite.EMPTY_TILE, tileX, tileY, null);
+                            break;
+                        case 2:
+                            g.drawImage(OrbSprite.ORB, tileX, tileY, null);
+                            break;
+                        case 3:
+                            g.drawImage(OrbSprite.POWER_ORB, tileX, tileY, null);
+                        default:
+                            break;
+                    }
                 }
             }
         }
