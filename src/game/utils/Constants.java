@@ -11,4 +11,8 @@ public final class Constants {
 
     public static final int ANIMATION_SPEED = 10;
     
+    public static final Tuple ARCH_STARTING_POSITION = new Tuple(12, 15);
+    public static final Tuple UBUNTU_STARTING_POSITION = new Tuple(13, 15);
+    public static final Tuple GENTOO_STARTING_POSITION = new Tuple(14, 15);
+    public static final Tuple MINT_STARTING_POSITION = new Tuple(15, 15);
 }

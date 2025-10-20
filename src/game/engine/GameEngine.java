@@ -6,7 +6,6 @@ import game.ui.GameFrame;
 import game.ui.GamePanel;
 import game.utils.Constants;
 import game.utils.KeyboardManager;
-import game.utils.Tuple;
 import game.world.sprites.EnemySprite;
 import java.util.ArrayList;
 
@@ -28,10 +27,10 @@ public class GameEngine implements Runnable {
         frame.setVisible(true);
 
         player = Player.getInstance();
-        enemies.add(new Enemy(EnemySprite.ARCH, new Tuple(12, 15)));
-        enemies.add(new Enemy(EnemySprite.UBUNTU, new Tuple(13, 15)));
-        enemies.add(new Enemy(EnemySprite.GENTOO, new Tuple(14, 15)));
-        enemies.add(new Enemy(EnemySprite.MINT, new Tuple(15, 15)));
+        enemies.add(new Enemy(EnemySprite.ARCH, Constants.ARCH_STARTING_POSITION));
+        enemies.add(new Enemy(EnemySprite.UBUNTU, Constants.UBUNTU_STARTING_POSITION));
+        enemies.add(new Enemy(EnemySprite.GENTOO, Constants.GENTOO_STARTING_POSITION));
+        enemies.add(new Enemy(EnemySprite.MINT, Constants.GENTOO_STARTING_POSITION));
 
         panel.addKeyListener(new KeyboardManager());
         panel.setFocusable(true);
