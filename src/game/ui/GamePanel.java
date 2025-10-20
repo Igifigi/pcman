@@ -66,18 +66,7 @@ public class GamePanel extends JPanel {
                 } else {
                     // not wall
                     int pathType = Board.getOrbType(row, col);
-                    switch (pathType) {
-                        case 1:
-                            g.drawImage(OrbSprite.EMPTY_TILE, tileX, tileY, null);
-                            break;
-                        case 2:
-                            g.drawImage(OrbSprite.ORB, tileX, tileY, null);
-                            break;
-                        case 3:
-                            g.drawImage(OrbSprite.POWER_ORB, tileX, tileY, null);
-                        default:
-                            break;
-                    }
+                    g.drawImage(OrbSprite.getOrbByType(pathType), tileX, tileY, null);
                 }
             }
         }
