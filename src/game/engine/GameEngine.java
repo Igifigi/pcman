@@ -19,10 +19,10 @@ public class GameEngine implements Runnable {
     private GamePanel panel;
     private Player player;
     private int tick = 0;
-    private static ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
 
     public GameEngine(GameFrame frame) {
-        panel = new GamePanel();
+        panel = new GamePanel(this);
         frame.add(panel);
         frame.setVisible(true);
 
@@ -43,7 +43,7 @@ public class GameEngine implements Runnable {
         thread.start();
     }
 
-    public static ArrayList<Enemy> getEnemies() {
+    public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 

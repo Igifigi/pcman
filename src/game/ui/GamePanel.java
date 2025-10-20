@@ -13,12 +13,19 @@ import game.engine.GameEngine;
 
 public class GamePanel extends JPanel {
     private final Player player;
+    private final GameEngine engine;
 
     private int panelWidth;
     private int panelHeight;
 
     private int boardX;
     private int boardY;
+
+    public GamePanel(GameEngine gameEngine) {
+        this.setBackground(Color.BLACK);
+        player = Player.getInstance();
+        this.engine = gameEngine;
+    }
 
     private int getPlayerX() {
         return player.getBoardX() * 32 + boardX;
@@ -75,15 +82,10 @@ public class GamePanel extends JPanel {
         g.setColor(Color.RED);
         g.fillRect(this.getPlayerX(), this.getPlayerY(), player.getWidth(), player.getHeight());
 
-        //draw enemies
-        for (Enemy e : GameEngine.getEnemies()) {
+        // draw enemies
+        for (Enemy e : engine.getEnemies()) {
             e.draw(g, Constants.TILE_SIZE, boardX, boardY);
         }
-    }
-
-    public GamePanel() {
-        this.setBackground(Color.BLACK);
-        player = Player.getInstance();
     }
 
 }
