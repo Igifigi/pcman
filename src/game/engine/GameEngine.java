@@ -1,10 +1,14 @@
 package game.engine;
 
 import game.entities.Player;
+import game.entities.Enemy;
 import game.ui.GameFrame;
 import game.ui.GamePanel;
 import game.utils.Constants;
 import game.utils.KeyboardManager;
+import game.utils.Tuple;
+import game.world.sprites.EnemySprite;
+import java.util.ArrayList;
 
 public class GameEngine implements Runnable {
     private static final int FPS = Constants.FPS;
@@ -16,6 +20,7 @@ public class GameEngine implements Runnable {
     private GamePanel panel;
     private Player player;
     private int tick = 0;
+    private static ArrayList<Enemy> enemies = new ArrayList<>();
 
     public GameEngine(GameFrame frame) {
         panel = new GamePanel();
@@ -23,6 +28,10 @@ public class GameEngine implements Runnable {
         frame.setVisible(true);
 
         player = Player.getInstance();
+        enemies.add(new Enemy(EnemySprite.ARCH, new Tuple(12, 15)));
+        enemies.add(new Enemy(EnemySprite.UBUNTU, new Tuple(13, 15)));
+        enemies.add(new Enemy(EnemySprite.GENTOO, new Tuple(14, 15)));
+        enemies.add(new Enemy(EnemySprite.MINT, new Tuple(15, 15)));
 
         panel.addKeyListener(new KeyboardManager());
         panel.setFocusable(true);
@@ -35,11 +44,16 @@ public class GameEngine implements Runnable {
         thread.start();
     }
 
+    public static ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
     @Override
     public void run() {
         while (running) {
             if (tick % TPS == 0) {
                 player.updateLocation();
+                enemies.forEach(Enemy::update);
             }
             tick++;
             panel.repaint();

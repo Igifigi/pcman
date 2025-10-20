@@ -1,12 +1,15 @@
 package game.ui;
 
 import game.entities.Player;
+import game.utils.Constants;
+import game.entities.Enemy;
 import game.world.Board;
 import game.world.sprites.OrbSprite;
 import game.world.sprites.WallSprite;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import game.engine.GameEngine;
 
 public class GamePanel extends JPanel {
     private final Player player;
@@ -82,6 +85,11 @@ public class GamePanel extends JPanel {
         // draw player
         g.setColor(Color.RED);
         g.fillRect(this.getPlayerX(), this.getPlayerY(), player.getWidth(), player.getHeight());
+
+        //draw enemies
+        for (Enemy e : GameEngine.getEnemies()) {
+            e.draw(g, Constants.TILE_SIZE, boardX, boardY);
+        }
     }
 
     public GamePanel() {
