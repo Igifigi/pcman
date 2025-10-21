@@ -2,6 +2,7 @@ package game.engine;
 
 import game.entities.Player;
 import game.entities.Enemy;
+import game.entities.Entity;
 import game.ui.GameFrame;
 import game.ui.GamePanel;
 import game.utils.Constants;
@@ -17,7 +18,7 @@ public class GameEngine implements Runnable {
     private Thread thread;
     private boolean running = false;
     private GamePanel panel;
-    private Player player;
+    private Entity player;
     private int tick = 0;
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
@@ -51,7 +52,7 @@ public class GameEngine implements Runnable {
     public void run() {
         while (running) {
             if (tick % TPS == 0) {
-                player.updateLocation();
+                player.update();
                 enemies.forEach(Enemy::update);
             }
             tick++;

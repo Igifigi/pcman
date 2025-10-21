@@ -15,4 +15,7 @@ public final class Constants {
     public static final Tuple UBUNTU_STARTING_POSITION = new Tuple(13, 15);
     public static final Tuple GENTOO_STARTING_POSITION = new Tuple(14, 15);
     public static final Tuple MINT_STARTING_POSITION = new Tuple(15, 15);
+    public static final Tuple PLAYER_STARTING_POSITION = new Tuple(1, 1);
+
+    public static final Tuple NULL_MOVEMENT = new Tuple(0, 0);
 }

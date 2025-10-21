@@ -5,43 +5,32 @@ import java.awt.Graphics;
 
 import game.utils.Direction;
 import game.utils.Tuple;
-import game.world.Board;
+import game.utils.Utils;
 import game.world.sprites.EnemySprite;
 
-public class Enemy {
+public class Enemy extends Entity {
     private final BufferedImage scaredSprite = EnemySprite.ERROR;
-    private final BufferedImage enemySprite;
     private Direction desiredMovement = Direction.NONE;
-    private Tuple movement = new Tuple(0,0);
-    private Tuple boardPosition;
-    private boolean scared = false; //to change sprite to error/scared
+    private boolean scared = false; // to change sprite to error/scared
 
-    public Enemy(BufferedImage enemySprite, Tuple position) {
-        this.enemySprite = enemySprite;
-        this.boardPosition = position;
+    public Enemy(BufferedImage sprite, Tuple startingPosition) {
+        super(sprite, startingPosition);
     }
 
-    private boolean canGoThere(int dx, int dy) {
-        if (boardPosition.first + dx > 27 || boardPosition.second + dy > 29 
-            || boardPosition.first + dx < 0 || boardPosition.second + dy < 0) {
-                return false;
-            }
-        return Board.map[boardPosition.second + dy][boardPosition.first + dx] == 0;
-    }
-
-    //random movements to demonstrate functionality
+    // random movements to demonstrate functionality
+    @Override
     public void update() {
         double rand = Math.random();
         if (rand < 0.25) {
             desiredMovement = Direction.UP;
         } else if (rand < 0.5) {
             desiredMovement = Direction.DOWN;
-            //scared = false;
+            // scared = false;
         } else if (rand < 0.75) {
             desiredMovement = Direction.LEFT;
         } else if (rand < 1) {
             desiredMovement = Direction.RIGHT;
-            //scared = true;
+            // scared = true;
         }
 
         if (this.canGoThere(desiredMovement.dx(), desiredMovement.dy())) {
@@ -55,13 +44,11 @@ public class Enemy {
         }
     }
 
-    public void draw(Graphics g, int tileSize, int boardX, int boardY) {
-        if (!scared) {
-            g.drawImage(enemySprite, boardPosition.first * tileSize + boardX, boardPosition.second * tileSize + boardY, null);
-        } else {
-            g.drawImage(scaredSprite, boardPosition.first * tileSize + boardX, boardPosition.second * tileSize + boardY, null);
-        }
-        
+    public void draw(Graphics g, int tileSize, int boardOffsetX, int boardOffsetY) {
+        BufferedImage toDraw = (!scared) ? sprite : scaredSprite;
+        Tuple onScreenPosition = Utils.calculateOnScreenPosition(this.boardPosition.first, this.boardPosition.second,
+                tileSize, boardOffsetX, boardOffsetY);
+        g.drawImage(toDraw, onScreenPosition.first, onScreenPosition.second, null);
     }
 
 }
