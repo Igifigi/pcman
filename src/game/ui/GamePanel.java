@@ -1,27 +1,30 @@
 package game.ui;
 
 import game.entities.Player;
+import game.utils.Constants;
+import game.entities.Enemy;
 import game.world.Board;
+import game.world.sprites.OrbSprite;
 import game.world.sprites.WallSprite;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import game.engine.GameEngine;
 
 public class GamePanel extends JPanel {
     private final Player player;
+    private final GameEngine engine;
 
     private int panelWidth;
     private int panelHeight;
 
-    private int boardX;
-    private int boardY;
+    private int boardOffsetX;
+    private int boardOffsetY;
 
-    private int getPlayerX() {
-        return player.getBoardX() * 32 + boardX;
-    }
-
-    private int getPlayerY() {
-        return player.getBoardY() * 32 + boardY;
+    public GamePanel(GameEngine gameEngine) {
+        this.setBackground(Color.BLACK);
+        player = Player.getInstance();
+        this.engine = gameEngine;
     }
 
     @Override
@@ -45,35 +48,35 @@ public class GamePanel extends JPanel {
             rectHeight *= 2;
         }
 
-        boardX = (panelWidth - rectWidth) / 2;
-        boardY = (panelHeight - rectHeight) / 2;
+        boardOffsetX = (panelWidth - rectWidth) / 2;
+        boardOffsetY = (panelHeight - rectHeight) / 2;
 
         // draw pre-board (background)
         g.setColor(Color.BLUE);
-        g.fillRect(boardX, boardY, rectWidth, rectHeight);
+        g.fillRect(boardOffsetX, boardOffsetY, rectWidth, rectHeight);
 
         for (int row = 0; row < Board.getHeight(); row++) {
             for (int col = 0; col < Board.getWidth(); col++) {
-                int tileX = boardX + 32 * col;
-                int tileY = boardY + 32 * row;
+                int tileX = boardOffsetX + 32 * col;
+                int tileY = boardOffsetY + 32 * row;
                 if (Board.map[row][col] == 1) {
                     // wall
                     g.drawImage(WallSprite.getWallTile(Board.getWallType(row, col)), tileX, tileY, null);
                 } else {
                     // not wall
-                    g.drawImage(WallSprite.EMPTY_TILE, tileX, tileY, null);
+                    int pathType = Board.getOrbType(row, col);
+                    g.drawImage(OrbSprite.getOrbByType(pathType), tileX, tileY, null);
                 }
             }
         }
 
         // draw player
-        g.setColor(Color.RED);
-        g.fillRect(this.getPlayerX(), this.getPlayerY(), player.getWidth(), player.getHeight());
-    }
+        player.draw(g, Constants.TILE_SIZE, boardOffsetX, boardOffsetY);
 
-    public GamePanel() {
-        this.setBackground(Color.BLACK);
-        player = Player.getInstance();
+        // draw enemies
+        for (Enemy e : engine.getEnemies()) {
+            e.draw(g, Constants.TILE_SIZE, boardOffsetX, boardOffsetY);
+        }
     }
 
 }

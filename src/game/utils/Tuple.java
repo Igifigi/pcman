@@ -13,4 +13,8 @@ public class Tuple {
         this.first = first;
         this.second = second;
     }
+
+    public Tuple clone() {
+        return new Tuple(this.first, this.second);
+    }
 }
