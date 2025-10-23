@@ -52,8 +52,8 @@ public class GameEngine implements Runnable {
     public void run() {
         while (running) {
             if (tick % TPS == 0) {
-                player.update();
-                enemies.forEach(Enemy::update);
+                player.update(this);
+                enemies.forEach((enemy)->{enemy.update(this);});
             }
             tick++;
             panel.repaint();

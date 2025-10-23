@@ -4,7 +4,12 @@ import game.world.Board;
 import game.world.sprites.PlayerSprite;
 
 import java.awt.Graphics;
+import java.util.List;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import game.engine.GameEngine;
 import game.utils.Animation;
 import game.utils.Constants;
 import game.utils.Direction;
@@ -15,6 +20,7 @@ public class Player extends Entity {
     // eager init due to multithreading
     private static Player instance = new Player();
     static final Tuple size = new Tuple(32, 32);
+    private Timer powerUpTimer;
 
     private static final int ANIMATION_SPEED = Constants.ANIMATION_SPEED;
     Animation goLeft;
@@ -53,7 +59,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public void update() {
+    public void update(GameEngine engine) {
         // teleport L -> R
         if (this.boardPosition.first <= 0 && this.boardPosition.second == 14
                 && desiredMovement.equals(Direction.LEFT)) {
@@ -64,12 +70,20 @@ public class Player extends Entity {
         if (this.boardPosition.first >= 27 && this.boardPosition.second == 14
                 && desiredMovement.equals(Direction.RIGHT)) {
             this.boardPosition.first = 0;
+            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
+                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
+                remainingOrbs --;
+            }
         }
 
         if (this.canGoThere(desiredMovement.dx(), desiredMovement.dy())) {
             movement.first = desiredMovement.dx();
             movement.second = desiredMovement.dy();
             currentMovement = desiredMovement;
+            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
+                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
+                remainingOrbs --;
+            }
         }
 
         if (this.canGoThere(movement.first, movement.second)) {
@@ -84,9 +98,35 @@ public class Player extends Entity {
             if (Board.getOrbType(boardPosition.second, boardPosition.first) == 3) {
                 Board.setOrbType(boardPosition.second, boardPosition.first, 1);
                 remainingOrbs --;
-                poweredUp = true; //TODO power-up logic 
+                powerUp(engine.getEnemies());
             }
         }
+    }
+
+    public void powerUp(List<Enemy> enemies) {
+        poweredUp = true;
+
+        for (Enemy e : enemies) {
+            e.setScared(true);
+        }
+
+        if (powerUpTimer != null && powerUpTimer.isRunning()) {
+            powerUpTimer.stop();
+        }
+
+        powerUpTimer = new Timer(Constants.POWERUP_DURATION, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                poweredUp = false;
+                for (Enemy enemy : enemies) {
+                    enemy.setScared(false);
+                }
+                powerUpTimer.stop();
+            }
+        });
+
+        powerUpTimer.setRepeats(false);
+        powerUpTimer.start();
     }
     
     public void updateAnimation() {
