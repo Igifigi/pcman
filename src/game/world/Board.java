@@ -69,7 +69,7 @@ public class Board {
         {13,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,12},
     };
 
-    private static final int[][] orbs = {
+    private static int[][] orbs = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,0},
         {0,2,0,0,0,0,2,0,0,0,0,0,2,0,0,2,0,0,0,0,0,2,0,0,0,0,2,0},
@@ -119,4 +119,7 @@ public class Board {
         return orbs[boardX][boardY];
     }
     
+    public static void setOrbType(int boardX, int boardY, int type) {
+        orbs[boardX][boardY] = type;
+    }
 }

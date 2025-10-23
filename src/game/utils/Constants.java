@@ -18,4 +18,6 @@ public final class Constants {
     public static final Tuple PLAYER_STARTING_POSITION = new Tuple(1, 1);
 
     public static final Tuple NULL_MOVEMENT = new Tuple(0, 0);
+
+    public static final int INITIAL_ORBS = 300;
 }

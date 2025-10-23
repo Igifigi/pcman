@@ -1,5 +1,6 @@
 package game.entities;
 
+import game.world.Board;
 import game.world.sprites.PlayerSprite;
 
 import java.awt.Graphics;
@@ -23,12 +24,16 @@ public class Player extends Entity {
     Animation animation;
 
     public int playerHealth;
+    public int remainingOrbs;
+    public boolean poweredUp = false;
+    
 
     private Player() {
         super(null, Constants.PLAYER_STARTING_POSITION);
         playerHealth = 3;        //TODO temporary init due
         this.pickAnimationSet(); //to lack of HP system
-        animation = goLeft;
+        animation = goRight;
+        remainingOrbs = Constants.INITIAL_ORBS;
     }
 
     public static Player getInstance() {
@@ -70,6 +75,17 @@ public class Player extends Entity {
         if (this.canGoThere(movement.first, movement.second)) {
             boardPosition.first += movement.first;
             boardPosition.second += movement.second;
+
+            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
+                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
+                remainingOrbs --;
+            }
+
+            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 3) {
+                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
+                remainingOrbs --;
+                poweredUp = true; //TODO power-up logic 
+            }
         }
     }
     
