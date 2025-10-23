@@ -12,6 +12,7 @@ public abstract class Entity {
     protected Tuple boardPosition;
     protected Tuple movement = Constants.NULL_MOVEMENT.clone();
     protected Direction desiredMovement = Direction.NONE;
+    protected Direction currentMovement = Direction.NONE;
     protected BufferedImage sprite;
 
     public Entity(BufferedImage sprite, Tuple startingPosition) {

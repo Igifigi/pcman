@@ -2,7 +2,6 @@ package game.entities;
 
 import game.world.sprites.PlayerSprite;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import game.utils.Animation;
@@ -21,11 +20,15 @@ public class Player extends Entity {
     Animation goRight;
     Animation goUp;
     Animation goDown;
+    Animation animation;
 
     public int playerHealth;
 
     private Player() {
         super(null, Constants.PLAYER_STARTING_POSITION);
+        playerHealth = 3;        //TODO temporary init due
+        this.pickAnimationSet(); //to lack of HP system
+        animation = goLeft;
     }
 
     public static Player getInstance() {
@@ -61,11 +64,36 @@ public class Player extends Entity {
         if (this.canGoThere(desiredMovement.dx(), desiredMovement.dy())) {
             movement.first = desiredMovement.dx();
             movement.second = desiredMovement.dy();
+            currentMovement = desiredMovement;
         }
 
         if (this.canGoThere(movement.first, movement.second)) {
             boardPosition.first += movement.first;
             boardPosition.second += movement.second;
+        }
+    }
+    
+    public void updateAnimation() {
+        this.pickAnimationDirection();
+        this.animation.update();
+    }
+
+    private void pickAnimationDirection() {
+        switch (currentMovement) {
+            case Direction.UP:
+                animation = goUp;
+                break;
+            case Direction.DOWN:
+                animation = goDown;
+                break;
+            case Direction.LEFT:
+                animation = goLeft;
+                break;
+            case Direction.RIGHT:
+                animation = goRight;
+                break;
+            default:
+                break;
         }
     }
 
@@ -96,10 +124,9 @@ public class Player extends Entity {
 
     @Override
     public void draw(Graphics g, int tileSize, int boardOffsetX, int boardOffsetY) {
-        g.setColor(Color.RED);
         Tuple onScreenPosition = Utils.calculateOnScreenPosition(this.boardPosition.first, this.boardPosition.second,
                 tileSize, boardOffsetX, boardOffsetY);
-        g.fillRect(onScreenPosition.first, onScreenPosition.second, tileSize, tileSize);
+        g.drawImage(animation.getSprite(),onScreenPosition.first, onScreenPosition.second, null);
     }
 
 }

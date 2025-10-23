@@ -16,8 +16,8 @@ public class Animation {
     
     public Animation(BufferedImage[] frames, int frameDelay) {
         this.frameDelay = frameDelay;
-        this.stopped = true;
-
+        this.stopped = false;
+        amountOfFrames = frames.length;
         for (int i = 0; i < frames.length; i++) {
             addFrame(frames[i], frameDelay);
         }
@@ -75,7 +75,7 @@ public class Animation {
     public void update() {
         if(!stopped) {
             frameTickCount ++;
-
+            
             if(frameTickCount > frameDelay) {
                 frameTickCount = 0;
                 currentFrame += 1;

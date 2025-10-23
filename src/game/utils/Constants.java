@@ -9,7 +9,7 @@ public final class Constants {
     public static final int TILE_SIZE = 32;
     public static final String SPRITE_SHEET_FILENAME = "src/resources/textures/spritesheet.png";
 
-    public static final int ANIMATION_SPEED = 10;
+    public static final int ANIMATION_SPEED = 5;
     
     public static final Tuple ARCH_STARTING_POSITION = new Tuple(12, 15);
     public static final Tuple UBUNTU_STARTING_POSITION = new Tuple(13, 15);
