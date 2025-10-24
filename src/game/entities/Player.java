@@ -26,8 +26,8 @@ public class Player extends Entity {
 
     private Player() {
         super(null, Constants.PLAYER_STARTING_POSITION);
-        playerHealth = 3;        //TODO temporary init due
-        this.pickAnimationSet(); //to lack of HP system
+        playerHealth = 3; // TODO temporary init due
+        this.pickAnimationSet(); // to lack of HP system
         animation = goLeft;
     }
 
@@ -72,7 +72,7 @@ public class Player extends Entity {
             boardPosition.second += movement.second;
         }
     }
-    
+
     public void updateAnimation() {
         this.pickAnimationDirection();
         this.animation.update();
@@ -126,7 +126,7 @@ public class Player extends Entity {
     public void draw(Graphics g, int tileSize, int boardOffsetX, int boardOffsetY) {
         Tuple onScreenPosition = Utils.calculateOnScreenPosition(this.boardPosition.first, this.boardPosition.second,
                 tileSize, boardOffsetX, boardOffsetY);
-        g.drawImage(animation.getSprite(),onScreenPosition.first, onScreenPosition.second, null);
+        g.drawImage(animation.getSprite(), onScreenPosition.first, onScreenPosition.second, null);
     }
 
 }
