@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Animation {
-    private int frameTickCount; //how long the current frame has been displayed
-    private int frameDelay;     //how long to display each frame
-    private int currentFrame;   //current frame of animation
-    private int amountOfFrames; //length of the animation
+    private int frameTickCount; // how long the current frame has been displayed
+    private int frameDelay; // how long to display each frame
+    private int currentFrame; // current frame of animation
+    private int amountOfFrames; // length of the animation
 
-    private boolean stopped;    //whether the animation is playing
+    private boolean stopped; // whether the animation is playing
 
-    private List<Frame> frames = new ArrayList<Frame>();    //list of frames
-    
+    private List<Frame> frames = new ArrayList<Frame>(); // list of frames
+
     public Animation(BufferedImage[] frames, int frameDelay) {
         this.frameDelay = frameDelay;
-        this.stopped = true;
-
+        this.stopped = false;
+        amountOfFrames = frames.length;
         for (int i = 0; i < frames.length; i++) {
             addFrame(frames[i], frameDelay);
         }
@@ -73,14 +73,14 @@ public class Animation {
     }
 
     public void update() {
-        if(!stopped) {
-            frameTickCount ++;
+        if (!stopped) {
+            frameTickCount++;
 
-            if(frameTickCount > frameDelay) {
+            if (frameTickCount > frameDelay) {
                 frameTickCount = 0;
                 currentFrame += 1;
 
-                if(currentFrame > amountOfFrames -1) {
+                if (currentFrame > amountOfFrames - 1) {
                     currentFrame = 0;
                 }
             }

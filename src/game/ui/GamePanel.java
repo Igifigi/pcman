@@ -71,6 +71,7 @@ public class GamePanel extends JPanel {
         }
 
         // draw player
+        player.updateAnimation();
         player.draw(g, Constants.TILE_SIZE, boardOffsetX, boardOffsetY);
 
         // draw enemies
