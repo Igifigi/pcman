@@ -17,4 +17,8 @@ public class Tuple {
     public Tuple clone() {
         return new Tuple(this.first, this.second);
     }
+
+    public String toString() {
+        return "(" + this.first + ", " + this.second + ")";
+    }
 }

@@ -17,5 +17,8 @@ public final class Constants {
     public static final Tuple MINT_STARTING_POSITION = new Tuple(15, 15);
     public static final Tuple PLAYER_STARTING_POSITION = new Tuple(1, 1);
 
+    public static final int MINT_DISTANCE = 4;
+    public static final Tuple GENTOO_SECOND_TARGET = new Tuple(1, 29);
+
     public static final Tuple NULL_MOVEMENT = new Tuple(0, 0);
 }

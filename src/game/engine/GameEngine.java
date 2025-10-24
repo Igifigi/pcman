@@ -6,8 +6,9 @@ import game.entities.Entity;
 import game.ui.GameFrame;
 import game.ui.GamePanel;
 import game.utils.Constants;
+import game.utils.EnemyType;
 import game.utils.KeyboardManager;
-import game.world.sprites.EnemySprite;
+
 import java.util.ArrayList;
 
 public class GameEngine implements Runnable {
@@ -28,10 +29,13 @@ public class GameEngine implements Runnable {
         frame.setVisible(true);
 
         player = Player.getInstance();
-        enemies.add(new Enemy(EnemySprite.ARCH, Constants.ARCH_STARTING_POSITION));
-        enemies.add(new Enemy(EnemySprite.UBUNTU, Constants.UBUNTU_STARTING_POSITION));
-        enemies.add(new Enemy(EnemySprite.GENTOO, Constants.GENTOO_STARTING_POSITION));
-        enemies.add(new Enemy(EnemySprite.MINT, Constants.MINT_STARTING_POSITION));
+        Enemy ubuntu = new Enemy(EnemyType.UBUNTU, Constants.UBUNTU_STARTING_POSITION);
+        Enemy arch = new Enemy(EnemyType.ARCH, Constants.ARCH_STARTING_POSITION);
+        arch.setUbuntuReference(ubuntu);
+        enemies.add(ubuntu);
+        enemies.add(arch);
+        enemies.add(new Enemy(EnemyType.GENTOO, Constants.GENTOO_STARTING_POSITION));
+        enemies.add(new Enemy(EnemyType.MINT, Constants.GENTOO_STARTING_POSITION));
 
         panel.addKeyListener(new KeyboardManager());
         panel.setFocusable(true);
