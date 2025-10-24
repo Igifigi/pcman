@@ -37,4 +37,9 @@ public class Vertex implements Comparable<Vertex> {
     public int hashCode() {
         return 31 * Integer.hashCode(row) + Integer.hashCode(col);
     }
+
+    @Override
+    public String toString() {
+        return "(" + this.row + " " + this.col + ")";
+    }
 }

@@ -1,6 +1,7 @@
 package game.logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +12,8 @@ import game.utils.Direction;
 import game.world.Board;
 
 public class Graph {
+    private static Graph instance = new Graph();
+
     private final ArrayList<Vertex> vertices = new ArrayList<>();
     private final Set<Edge> edges = new HashSet<>();
     private final Map<Vertex, List<Vertex>> adjacencyList;
@@ -21,7 +24,7 @@ public class Graph {
             Direction.RIGHT
     };
 
-    public Graph() {
+    private Graph() {
         for (int row = 0; row < Board.getHeight(); row++) {
             for (int col = 0; col < Board.getWidth(); col++) {
                 if (Board.map[row][col] != 0) {
@@ -52,6 +55,11 @@ public class Graph {
         }
 
         adjacencyList = buildAdjacency();
+        // this.printGraph();
+    }
+
+    public static Graph getInstance() {
+        return instance;
     }
 
     private Map<Vertex, List<Vertex>> buildAdjacency() {
@@ -67,6 +75,10 @@ public class Graph {
         }
 
         return map;
+    }
+
+    public List<Vertex> getNeighbors(Vertex vertex) {
+        return adjacencyList.getOrDefault(vertex, Collections.emptyList());
     }
 
 }

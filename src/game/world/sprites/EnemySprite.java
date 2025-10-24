@@ -2,6 +2,8 @@ package game.world.sprites;
 
 import java.awt.image.BufferedImage;
 
+import game.utils.EnemyType;
+
 public final class EnemySprite {
 
     public static final BufferedImage ARCH = SpriteSheet.getSprite(7, 3);
@@ -11,4 +13,18 @@ public final class EnemySprite {
     public static final BufferedImage ERROR = SpriteSheet.getSprite(11, 3);
     public static final BufferedImage UBUNTU = SpriteSheet.getSprite(12, 3);
 
+    public static BufferedImage getSpriteByType(EnemyType type) {
+        switch (type) {
+            case EnemyType.ARCH:
+                return EnemySprite.ARCH;
+            case EnemyType.GENTOO:
+                return EnemySprite.GENTOO;
+            case EnemyType.MINT:
+                return EnemySprite.MINT;
+            case EnemyType.UBUNTU:
+                return EnemySprite.UBUNTU;
+            default:
+                return null;
+        }
+    }
 }

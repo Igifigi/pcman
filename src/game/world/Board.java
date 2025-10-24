@@ -118,5 +118,12 @@ public class Board {
     public static int getOrbType(int boardX, int boardY) {
         return orbs[boardX][boardY];
     }
-    
+
+    public static boolean isWall(int boardX, int boardY) {
+        if (boardX < 0 || boardY < 0 || boardX >= Board.map[0].length || boardY >= Board.map.length) {
+            return true;
+        }
+        return map[boardY][boardX] == 1;
+    }
+
 }
