@@ -21,4 +21,7 @@ public final class Constants {
     public static final Tuple GENTOO_SECOND_TARGET = new Tuple(1, 29);
 
     public static final Tuple NULL_MOVEMENT = new Tuple(0, 0);
+
+    public static final int INITIAL_ORBS = 300;
+    public static final int POWERUP_DURATION = 5000;
 }
