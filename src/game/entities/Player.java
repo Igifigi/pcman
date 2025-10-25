@@ -29,20 +29,24 @@ public class Player extends Entity {
     Animation goDown;
     Animation animation;
 
-    public int playerHealth;
-    public int remainingOrbs;
+    private int playerHealth;
+    private int remainingOrbs;
     public boolean poweredUp = false;
 
     private Player() {
         super(null, Constants.PLAYER_STARTING_POSITION);
-        playerHealth = 3; // TODO temporary init due
-        this.pickAnimationSet(); // to lack of HP system
+        playerHealth = Constants.INITIAL_PLAYER_HEALTH;
+        this.pickAnimationSet();
         animation = goRight;
         remainingOrbs = Constants.INITIAL_ORBS;
     }
 
     public static Player getInstance() {
         return instance;
+    }
+
+    public static void reset() {
+        instance = new Player();
     }
 
     public int getWidth() {
@@ -57,12 +61,28 @@ public class Player extends Entity {
         desiredMovement = direction;
     }
 
+    public int getHealth() {
+        return playerHealth;
+    }
+
+    public int getOrbs() {
+        return remainingOrbs;
+    }
+
+    public boolean isPoweredUp() {
+        return poweredUp;
+    }
+
     @Override
     public void update(GameEngine engine) {
         // teleport
         if (boardPosition.second == 14) {
             if (boardPosition.first <= 0 && desiredMovement.equals(Direction.LEFT)) {
                 boardPosition.first = 27;
+                if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
+                    Board.setOrbType(boardPosition.second, boardPosition.first, 1);
+                    remainingOrbs--;
+                }
             } else if (boardPosition.first >= 27 && desiredMovement.equals(Direction.RIGHT)) {
                 boardPosition.first = 0;
             }
@@ -109,6 +129,11 @@ public class Player extends Entity {
 
         powerUpTimer.setRepeats(false);
         powerUpTimer.start();
+    }
+
+    public void takeDamage() {
+        this.playerHealth--;
+        this.pickAnimationSet();
     }
 
     public void updateAnimation() {
@@ -165,14 +190,6 @@ public class Player extends Entity {
         Tuple onScreenPosition = Utils.calculateOnScreenPosition(this.boardPosition.first, this.boardPosition.second,
                 tileSize, boardOffsetX, boardOffsetY);
         g.drawImage(animation.getSprite(), onScreenPosition.first, onScreenPosition.second, null);
-    }
-
-    public int getRemainingOrbs() {
-        return remainingOrbs;
-    }
-
-    public int getHp() {
-        return playerHealth;
     }
 
     private void collectOrbIfPresent(GameEngine engine) {

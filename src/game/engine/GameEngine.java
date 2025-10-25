@@ -2,7 +2,6 @@ package game.engine;
 
 import game.entities.Player;
 import game.entities.Enemy;
-import game.entities.Entity;
 import game.ui.GameFrame;
 import game.ui.GamePanel;
 import game.ui.LossPanel;
@@ -20,8 +19,9 @@ public class GameEngine implements Runnable {
 
     private Thread thread;
     private boolean running = false;
+    private boolean paused = false;
     private GamePanel panel;
-    private Entity player;
+    private Player player;
     private int tick = 0;
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
@@ -45,9 +45,42 @@ public class GameEngine implements Runnable {
     }
 
     public void start() {
+        Player.reset();
         running = true;
         thread = new Thread(this);
         thread.start();
+    }
+
+    public void restart() {
+        paused = true;
+        player.takeDamage();
+
+        player.goToStart();
+        for (Enemy enemy : enemies) {
+            enemy.goToStart();
+            enemy.update(this);
+        }
+
+        try {
+            // maybe play a sound to indicate HP loss?
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        paused = false;
+    }
+
+    private boolean detectCollision() {
+        for (Enemy enemy : enemies) {
+            if (!player.isPoweredUp() && player.isCollidingWith(enemy)) {
+                return true;
+            }
+            if (player.isCollidingWith(enemy) && player.isPoweredUp()) {
+                enemy.goToStart();
+                return false;
+            }
+        }
+        return false;
     }
 
     public ArrayList<Enemy> getEnemies() {
@@ -82,21 +115,31 @@ public class GameEngine implements Runnable {
 
     @Override
     public void run() {
+        performWinScreen();
         while (running) {
-            // update player more often than enemies
+
+            if (paused) {
+                continue;
+            }
+
             if (tick % Constants.PLAYER_TPS == 0) {
                 player.update(this);
             }
+
             if (tick % Constants.ENEMY_TPS == 0) {
                 enemies.forEach((enemy) -> {
                     enemy.update(this);
                 });
             }
 
-            if (Player.getInstance().getRemainingOrbs() == 0) {
+            if (detectCollision()) {
+                restart();
+            }
+
+            if (player.getOrbs() == 0) {
                 performWinScreen();
             }
-            if (Player.getInstance().getHp() == 0) {
+            if (player.getHealth() == 0) {
                 performLossScreen();
             }
 
@@ -108,6 +151,7 @@ public class GameEngine implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
     }
 }

@@ -64,7 +64,7 @@ public class GamePanel extends JPanel {
         int scoreY = boardOffsetX + 50;
 
         g.drawString("SCORE", scoreX, scoreY);
-        g.drawString(Constants.INITIAL_ORBS - player.getRemainingOrbs() + "", scoreX + 25, scoreY + 50);
+        g.drawString(Constants.INITIAL_ORBS - player.getOrbs() + "", scoreX + 25, scoreY + 50);
 
         // draw board
         for (int row = 0; row < Board.getHeight(); row++) {

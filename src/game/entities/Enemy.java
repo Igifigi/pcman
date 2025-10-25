@@ -19,7 +19,7 @@ public class Enemy extends Entity {
     public final EnemyType type;
     private final BufferedImage scaredSprite = EnemySprite.ERROR;
     public Direction desiredMovement = Direction.NONE;
-    private boolean scared = false; // to change sprite to error/scared
+    private boolean scared = false;
 
     private Enemy ubuntuReference;
 
@@ -32,7 +32,6 @@ public class Enemy extends Entity {
         this.ubuntuReference = ubuntu;
     }
 
-    // random movements to demonstrate functionality
     @Override
     public void update(GameEngine engine) {
         Tuple target = getTargetField();

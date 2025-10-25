@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import game.engine.GameEngine;
 import game.utils.Utils;
 
 public class LossPanel extends JPanel {
@@ -52,25 +51,21 @@ public class LossPanel extends JPanel {
 
         contentPanel.add(Box.createVerticalStrut(40));
 
-        JButton restartButton = new JButton("Restart");
-        restartButton.setFont(new Font("Noto Sans", Font.BOLD, 18));
-        restartButton.setForeground(Color.WHITE);
-        restartButton.setBackground(new Color(220, 38, 38));
-        restartButton.setFocusPainted(false);
-        restartButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        restartButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        JButton exitButton = new JButton("Exit");
+        exitButton.setFont(new Font("Noto Sans", Font.BOLD, 18));
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(new Color(220, 38, 38));
+        exitButton.setFocusPainted(false);
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        exitButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        restartButton.addActionListener(e -> {
-            parentFrame.getContentPane().removeAll();
-            GameEngine newEngine = new GameEngine((GameFrame) parentFrame);
-            newEngine.start();
-            parentFrame.revalidate();
-            parentFrame.repaint();
+        exitButton.addActionListener(e -> {
+            System.exit(0);
         });
 
-        contentPanel.add(restartButton);
+        contentPanel.add(exitButton);
 
         add(contentPanel, new GridBagConstraints());
     }
-    
+
 }
