@@ -24,11 +24,11 @@ public enum Direction {
     }
 
     public static Direction fromDelta(int dx, int dy) {
-    for (Direction dir : Direction.values()) {
-        if (dir.dx() == dx && dir.dy() == dy) {
-            return dir;
+        for (Direction dir : Direction.values()) {
+            if (dir.dx() == dx && dir.dy() == dy) {
+                return dir;
+            }
         }
+        return Direction.NONE;
     }
-    return Direction.NONE;
-}
 }

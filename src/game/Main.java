@@ -11,7 +11,7 @@ public class Main {
             GameFrame gameFrame = new GameFrame();
             GameEngine gameEngine = new GameEngine(gameFrame);
             gameEngine.start();
-            
+
         });
 
         System.out.println("Test");
