@@ -3,6 +3,7 @@ package game.entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import game.engine.GameEngine;
 import game.utils.Constants;
 import game.utils.Direction;
 import game.utils.Tuple;
@@ -51,7 +52,7 @@ public abstract class Entity {
         return Board.map[newY][newX] == 0;
     }
 
-    public abstract void update();
+    public abstract void update(GameEngine engine);
 
     public void draw(Graphics g, int tileSize, int boardX, int boardY) {
         if (sprite == null) {

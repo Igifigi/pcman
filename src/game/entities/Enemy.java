@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.awt.Graphics;
 
+import game.engine.GameEngine;
 import game.logic.BFS;
 import game.logic.Graph;
 import game.logic.Vertex;
@@ -33,7 +34,7 @@ public class Enemy extends Entity {
 
     // random movements to demonstrate functionality
     @Override
-    public void update() {
+    public void update(GameEngine engine) {
         Tuple target = getTargetField();
         Graph graph = Graph.getInstance();
         // TODO: fix XY mess-up
@@ -61,6 +62,10 @@ public class Enemy extends Entity {
             boardPosition.first += movement.first;
             boardPosition.second += movement.second;
         }
+    }
+
+    public void setScared(boolean scared) {
+        this.scared = scared;
     }
 
     public void draw(Graphics g, int tileSize, int boardOffsetX, int boardOffsetY) {
