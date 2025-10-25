@@ -97,12 +97,12 @@ public class Player extends Entity {
             if (Board.getOrbType(boardPosition.second, boardPosition.first) == 3) {
                 Board.setOrbType(boardPosition.second, boardPosition.first, 1);
                 remainingOrbs--;
-                powerUp(engine.getEnemies());
+                activatePowerUp(engine.getEnemies());
             }
         }
     }
 
-    public void powerUp(List<Enemy> enemies) {
+    public void activatePowerUp(List<Enemy> enemies) {
         poweredUp = true;
 
         for (Enemy e : enemies) {
