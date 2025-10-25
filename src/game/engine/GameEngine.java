@@ -115,7 +115,6 @@ public class GameEngine implements Runnable {
 
     @Override
     public void run() {
-        performWinScreen();
         while (running) {
 
             if (paused) {
