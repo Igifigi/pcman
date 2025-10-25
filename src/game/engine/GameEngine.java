@@ -4,6 +4,8 @@ import game.entities.Player;
 import game.entities.Enemy;
 import game.ui.GameFrame;
 import game.ui.GamePanel;
+import game.ui.LossPanel;
+import game.ui.WinPanel;
 import game.utils.Constants;
 import game.utils.EnemyType;
 import game.utils.KeyboardManager;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 
 public class GameEngine implements Runnable {
     private static final int FPS = Constants.FPS;
-    private static final int TPS = Constants.TPS;
+    // private static final int TPS = Constants.TPS;
     private static final int refreshRate = 1000 / FPS;
 
     private Thread thread;
@@ -43,6 +45,7 @@ public class GameEngine implements Runnable {
     }
 
     public void start() {
+        Player.reset();
         running = true;
         thread = new Thread(this);
         thread.start();
@@ -50,14 +53,16 @@ public class GameEngine implements Runnable {
 
     public void restart() {
         paused = true;
-        player.dealDamage();
+        player.takeDamage();
+
         player.goToStart();
         for (Enemy enemy : enemies) {
             enemy.goToStart();
             enemy.update(this);
         }
-        
+
         try {
+            // maybe play a sound to indicate HP loss?
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -65,31 +70,9 @@ public class GameEngine implements Runnable {
         paused = false;
     }
 
-    public void winGame() {
-        paused = true;
-        System.out.println("You win!!!!");
-    }
-
-    public void looseGame() {
-        paused = true;
-        System.out.println("You loose, looser!");
-    }
-
-    public boolean checkGameEnd() {
-        if (player.getOrbs() == 0) {
-            winGame();
-            return true;
-        }
-        if (player.getHealth() == 0) {
-            looseGame();
-            return true;
-        }
-        return false;
-    }
-
-    private boolean collision() {
+    private boolean detectCollision() {
         for (Enemy enemy : enemies) {
-            if (player.isCollidingWith(enemy) && !player.isPoweredUp()) {
+            if (!player.isPoweredUp() && player.isCollidingWith(enemy)) {
                 return true;
             }
             if (player.isCollidingWith(enemy) && player.isPoweredUp()) {
@@ -104,31 +87,71 @@ public class GameEngine implements Runnable {
         return enemies;
     }
 
+    public void performWinScreen() {
+        running = false;
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(panel);
+            if (window instanceof javax.swing.JFrame frame) {
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(new WinPanel(frame));
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
+    }
+
+    public void performLossScreen() {
+        running = false;
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(panel);
+            if (window instanceof javax.swing.JFrame frame) {
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(new LossPanel(frame));
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
+    }
+
     @Override
     public void run() {
+        performWinScreen();
         while (running) {
-            if (!paused) {
-                if (tick % TPS == 0) {
-                    player.update(this);
-                    enemies.forEach((enemy) -> {
-                        enemy.update(this);
-                    });
-                    if (!checkGameEnd()) {
-                        if (collision()) {
-                            restart();
-                        }
-                    }
-                }
-                tick++;
-                panel.repaint();
 
-                try {
-                    Thread.sleep(refreshRate);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            if (paused) {
+                continue;
             }
-            
+
+            if (tick % Constants.PLAYER_TPS == 0) {
+                player.update(this);
+            }
+
+            if (tick % Constants.ENEMY_TPS == 0) {
+                enemies.forEach((enemy) -> {
+                    enemy.update(this);
+                });
+            }
+
+            if (detectCollision()) {
+                restart();
+            }
+
+            if (player.getOrbs() == 0) {
+                performWinScreen();
+            }
+            if (player.getHealth() == 0) {
+                performLossScreen();
+            }
+
+            tick++;
+            panel.repaint();
+
+            try {
+                Thread.sleep(refreshRate);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }

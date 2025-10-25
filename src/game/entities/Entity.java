@@ -35,7 +35,7 @@ public abstract class Entity {
         return boardPosition.second;
     }
 
-    /**Teleport entity to start position declared at init. */
+    /** Teleport entity to start position declared at init. */
     public void goToStart() {
         boardPosition = startingPosition.clone();
         movement = Constants.NULL_MOVEMENT.clone();
@@ -61,11 +61,7 @@ public abstract class Entity {
     }
 
     public boolean isCollidingWith(Entity e) {
-        if (this.boardPosition.first == e.boardPosition.first && this.boardPosition.second == e.boardPosition.second) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.boardPosition.first == e.boardPosition.first && this.boardPosition.second == e.boardPosition.second;
     }
 
     public abstract void update(GameEngine engine);
