@@ -32,6 +32,7 @@ public class Player extends Entity {
     public int playerHealth;
     public int remainingOrbs;
     public boolean poweredUp = false;
+    
 
     private Player() {
         super(null, Constants.PLAYER_STARTING_POSITION);
@@ -71,7 +72,7 @@ public class Player extends Entity {
             this.boardPosition.first = 0;
             if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
                 Board.setOrbType(boardPosition.second, boardPosition.first, 1);
-                remainingOrbs--;
+                remainingOrbs --;
             }
         }
 
@@ -81,7 +82,7 @@ public class Player extends Entity {
             currentMovement = desiredMovement;
             if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
                 Board.setOrbType(boardPosition.second, boardPosition.first, 1);
-                remainingOrbs--;
+                remainingOrbs --;
             }
         }
 
@@ -91,12 +92,12 @@ public class Player extends Entity {
 
             if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
                 Board.setOrbType(boardPosition.second, boardPosition.first, 1);
-                remainingOrbs--;
+                remainingOrbs --;
             }
 
             if (Board.getOrbType(boardPosition.second, boardPosition.first) == 3) {
                 Board.setOrbType(boardPosition.second, boardPosition.first, 1);
-                remainingOrbs--;
+                remainingOrbs --;
                 powerUp(engine.getEnemies());
             }
         }
