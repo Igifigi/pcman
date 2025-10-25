@@ -59,46 +59,29 @@ public class Player extends Entity {
 
     @Override
     public void update(GameEngine engine) {
-        // teleport L -> R
-        if (this.boardPosition.first <= 0 && this.boardPosition.second == 14
-                && desiredMovement.equals(Direction.LEFT)) {
-            this.boardPosition.first = 27;
-        }
-
-        // teleport R -> L
-        if (this.boardPosition.first >= 27 && this.boardPosition.second == 14
-                && desiredMovement.equals(Direction.RIGHT)) {
-            this.boardPosition.first = 0;
-            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
-                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
-                remainingOrbs--;
+        // teleport
+        if (boardPosition.second == 14) {
+            if (boardPosition.first <= 0 && desiredMovement.equals(Direction.LEFT)) {
+                boardPosition.first = 27;
+            } else if (boardPosition.first >= 27 && desiredMovement.equals(Direction.RIGHT)) {
+                boardPosition.first = 0;
             }
+            collectOrbIfPresent(engine);
         }
 
-        if (this.canGoThere(desiredMovement.dx(), desiredMovement.dy())) {
+        // change of movement
+        if (canGoThere(desiredMovement.dx(), desiredMovement.dy())) {
             movement.first = desiredMovement.dx();
             movement.second = desiredMovement.dy();
             currentMovement = desiredMovement;
-            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
-                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
-                remainingOrbs--;
-            }
+            collectOrbIfPresent(engine);
         }
 
+        // movement, if possible
         if (this.canGoThere(movement.first, movement.second)) {
             boardPosition.first += movement.first;
             boardPosition.second += movement.second;
-
-            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
-                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
-                remainingOrbs--;
-            }
-
-            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 3) {
-                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
-                remainingOrbs--;
-                activatePowerUp(engine.getEnemies());
-            }
+            collectOrbIfPresent(engine);
         }
     }
 
@@ -182,6 +165,21 @@ public class Player extends Entity {
         Tuple onScreenPosition = Utils.calculateOnScreenPosition(this.boardPosition.first, this.boardPosition.second,
                 tileSize, boardOffsetX, boardOffsetY);
         g.drawImage(animation.getSprite(), onScreenPosition.first, onScreenPosition.second, null);
+    }
+
+    public int getRemainingOrbs() {
+        return remainingOrbs;
+    }
+
+    private void collectOrbIfPresent(GameEngine engine) {
+        int type = Board.getOrbType(boardPosition.second, boardPosition.first);
+        if (type == 2 || type == 3) {
+            Board.setOrbType(boardPosition.second, boardPosition.first, 1);
+            remainingOrbs--;
+            if (type == 3) {
+                activatePowerUp(engine.getEnemies());
+            }
+        }
     }
 
 }
