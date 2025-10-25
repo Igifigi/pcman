@@ -3,7 +3,8 @@ package game.utils;
 public final class Constants {
     public static final Tuple DEFAULT_WINDOW_SIZE = new Tuple(1500, 1090);
     public static final int FPS = 60;
-    public static final int TPS = (int) (60 / 10);
+    public static final int PLAYER_TPS = (int) (60 / 10);
+    public static final int ENEMY_TPS = (int) (60 / 6);
 
     /*-------------------SPRITES-------------------- */
     public static final int TILE_SIZE = 32;

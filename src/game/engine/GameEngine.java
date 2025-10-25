@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class GameEngine implements Runnable {
     private static final int FPS = Constants.FPS;
-    private static final int TPS = Constants.TPS;
+    // private static final int TPS = Constants.TPS;
     private static final int refreshRate = 1000 / FPS;
 
     private Thread thread;
@@ -55,8 +55,10 @@ public class GameEngine implements Runnable {
     @Override
     public void run() {
         while (running) {
-            if (tick % TPS == 0) {
+            if (tick % Constants.PLAYER_TPS == 0) {
                 player.update(this);
+            }
+            if (tick % Constants.ENEMY_TPS == 0) {
                 enemies.forEach((enemy) -> {
                     enemy.update(this);
                 });
