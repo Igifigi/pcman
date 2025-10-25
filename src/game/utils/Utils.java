@@ -1,5 +1,7 @@
 package game.utils;
 
+import java.util.Random;
+
 import game.entities.Player;
 import game.logic.BFS;
 import game.logic.Graph;
@@ -31,5 +33,15 @@ public class Utils {
             return new Tuple(nearest.row, nearest.col);
         }
         return Player.getInstance().getBoardPosition();
+    }
+
+    public static String getRandomWinMessage() {
+        Random random = new Random();
+        return Constants.WIN_MESSAGES[random.nextInt(Constants.WIN_MESSAGES.length)];
+    }
+
+    public static String getRandomLossMessage() {
+        Random random = new Random();
+        return Constants.LOSS_MESSAGES[random.nextInt(Constants.LOSS_MESSAGES.length)];
     }
 }

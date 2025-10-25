@@ -171,6 +171,10 @@ public class Player extends Entity {
         return remainingOrbs;
     }
 
+    public int getHp() {
+        return playerHealth;
+    }
+
     private void collectOrbIfPresent(GameEngine engine) {
         int type = Board.getOrbType(boardPosition.second, boardPosition.first);
         if (type == 2 || type == 3) {
