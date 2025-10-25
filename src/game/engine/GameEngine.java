@@ -35,7 +35,7 @@ public class GameEngine implements Runnable {
         enemies.add(ubuntu);
         enemies.add(arch);
         enemies.add(new Enemy(EnemyType.GENTOO, Constants.GENTOO_STARTING_POSITION));
-        enemies.add(new Enemy(EnemyType.MINT, Constants.GENTOO_STARTING_POSITION));
+        enemies.add(new Enemy(EnemyType.MINT, Constants.MINT_STARTING_POSITION));
 
         panel.addKeyListener(new KeyboardManager());
         panel.setFocusable(true);
