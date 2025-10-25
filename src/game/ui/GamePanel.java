@@ -7,6 +7,7 @@ import game.world.Board;
 import game.world.sprites.OrbSprite;
 import game.world.sprites.WallSprite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 import game.engine.GameEngine;
@@ -55,6 +56,17 @@ public class GamePanel extends JPanel {
         g.setColor(Color.BLUE);
         g.fillRect(boardOffsetX, boardOffsetY, rectWidth, rectHeight);
 
+        // draw score
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Noto Sans", Font.BOLD, 32));
+
+        int scoreX = boardOffsetX - 150;
+        int scoreY = boardOffsetX + 50;
+
+        g.drawString("SCORE", scoreX, scoreY);
+        g.drawString(Constants.INITIAL_ORBS - player.getRemainingOrbs() + "", scoreX + 25, scoreY + 50);
+
+        // draw board
         for (int row = 0; row < Board.getHeight(); row++) {
             for (int col = 0; col < Board.getWidth(); col++) {
                 int tileX = boardOffsetX + 32 * col;
