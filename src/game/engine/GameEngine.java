@@ -2,7 +2,6 @@ package game.engine;
 
 import game.entities.Player;
 import game.entities.Enemy;
-import game.entities.Entity;
 import game.ui.GameFrame;
 import game.ui.GamePanel;
 import game.utils.Constants;
@@ -18,8 +17,9 @@ public class GameEngine implements Runnable {
 
     private Thread thread;
     private boolean running = false;
+    private boolean paused = false;
     private GamePanel panel;
-    private Entity player;
+    private Player player;
     private int tick = 0;
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
@@ -35,7 +35,7 @@ public class GameEngine implements Runnable {
         enemies.add(ubuntu);
         enemies.add(arch);
         enemies.add(new Enemy(EnemyType.GENTOO, Constants.GENTOO_STARTING_POSITION));
-        enemies.add(new Enemy(EnemyType.MINT, Constants.GENTOO_STARTING_POSITION));
+        enemies.add(new Enemy(EnemyType.MINT, Constants.MINT_STARTING_POSITION));
 
         panel.addKeyListener(new KeyboardManager());
         panel.setFocusable(true);
@@ -48,6 +48,58 @@ public class GameEngine implements Runnable {
         thread.start();
     }
 
+    public void restart() {
+        paused = true;
+        player.dealDamage();
+        player.goToStart();
+        for (Enemy enemy : enemies) {
+            enemy.goToStart();
+            enemy.update(this);
+        }
+        
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        paused = false;
+    }
+
+    public void winGame() {
+        paused = true;
+        System.out.println("You win!!!!");
+    }
+
+    public void looseGame() {
+        paused = true;
+        System.out.println("You loose, looser!");
+    }
+
+    public boolean checkGameEnd() {
+        if (player.getOrbs() == 0) {
+            winGame();
+            return true;
+        }
+        if (player.getHealth() == 0) {
+            looseGame();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean collision() {
+        for (Enemy enemy : enemies) {
+            if (player.isCollidingWith(enemy) && !player.isPoweredUp()) {
+                return true;
+            }
+            if (player.isCollidingWith(enemy) && player.isPoweredUp()) {
+                enemy.goToStart();
+                return false;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
@@ -55,20 +107,28 @@ public class GameEngine implements Runnable {
     @Override
     public void run() {
         while (running) {
-            if (tick % TPS == 0) {
-                player.update(this);
-                enemies.forEach((enemy) -> {
-                    enemy.update(this);
-                });
-            }
-            tick++;
-            panel.repaint();
+            if (!paused) {
+                if (tick % TPS == 0) {
+                    player.update(this);
+                    enemies.forEach((enemy) -> {
+                        enemy.update(this);
+                    });
+                    if (!checkGameEnd()) {
+                        if (collision()) {
+                            restart();
+                        }
+                    }
+                }
+                tick++;
+                panel.repaint();
 
-            try {
-                Thread.sleep(refreshRate);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                try {
+                    Thread.sleep(refreshRate);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            
         }
     }
 }

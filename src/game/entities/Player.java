@@ -29,14 +29,14 @@ public class Player extends Entity {
     Animation goDown;
     Animation animation;
 
-    public int playerHealth;
-    public int remainingOrbs;
+    private int playerHealth;
+    private int remainingOrbs;
     public boolean poweredUp = false;
 
     private Player() {
         super(null, Constants.PLAYER_STARTING_POSITION);
-        playerHealth = 3; // TODO temporary init due
-        this.pickAnimationSet(); // to lack of HP system
+        playerHealth = Constants.INITIAL_PLAYER_HEALTH;
+        this.pickAnimationSet();
         animation = goRight;
         remainingOrbs = Constants.INITIAL_ORBS;
     }
@@ -57,12 +57,28 @@ public class Player extends Entity {
         desiredMovement = direction;
     }
 
+    public int getHealth() {
+        return playerHealth;
+    }
+
+    public int getOrbs() {
+        return remainingOrbs;
+    }
+
+    public boolean isPoweredUp() {
+        return poweredUp;
+    }
+
     @Override
     public void update(GameEngine engine) {
         // teleport L -> R
         if (this.boardPosition.first <= 0 && this.boardPosition.second == 14
                 && desiredMovement.equals(Direction.LEFT)) {
             this.boardPosition.first = 27;
+            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
+                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
+                remainingOrbs--;
+            }
         }
 
         // teleport R -> L
@@ -79,10 +95,6 @@ public class Player extends Entity {
             movement.first = desiredMovement.dx();
             movement.second = desiredMovement.dy();
             currentMovement = desiredMovement;
-            if (Board.getOrbType(boardPosition.second, boardPosition.first) == 2) {
-                Board.setOrbType(boardPosition.second, boardPosition.first, 1);
-                remainingOrbs--;
-            }
         }
 
         if (this.canGoThere(movement.first, movement.second)) {
@@ -93,7 +105,6 @@ public class Player extends Entity {
                 Board.setOrbType(boardPosition.second, boardPosition.first, 1);
                 remainingOrbs--;
             }
-
             if (Board.getOrbType(boardPosition.second, boardPosition.first) == 3) {
                 Board.setOrbType(boardPosition.second, boardPosition.first, 1);
                 remainingOrbs--;
@@ -126,6 +137,11 @@ public class Player extends Entity {
 
         powerUpTimer.setRepeats(false);
         powerUpTimer.start();
+    }
+
+    public void dealDamage() {
+        this.playerHealth --;
+        this.pickAnimationSet();
     }
 
     public void updateAnimation() {
