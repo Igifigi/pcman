@@ -2,6 +2,12 @@ package game.world.sprites;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Player sprite frames organized by health tier and facing direction.
+ *
+ * Each public constant is a BufferedImage[3] containing the animation frames,
+ * obtained via SpriteSheet.getSprite(col, row).
+ */
 public final class PlayerSprite {
 
     // ==== FULL HP SPRITES ==== //

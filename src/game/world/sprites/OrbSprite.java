@@ -2,6 +2,12 @@ package game.world.sprites;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Class that provides access to orb-related sprites.
+ * <p>
+ * Sprites are obtained from {@code SpriteSheet.getSprite(...)} at class load time.
+ * @see SpriteSheet
+ */
 public final class OrbSprite {
 
     public static final BufferedImage EMPTY_TILE = WallSprite.EMPTY_TILE;

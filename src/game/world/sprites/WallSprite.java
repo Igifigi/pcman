@@ -4,6 +4,14 @@ import game.utils.Tuple;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/**
+ * Class that maps wall types to sprite-sheet images.
+ *
+ * <p>Usage:
+ * Wall types correspond to the order of entries in the coordinates array.
+ * Call {@code getWallTile(wallType)} to obtain the {@link BufferedImage} for a given wall type. If {@link #wallType} is
+ *   negative, {@link #EMPTY_TILE} is returned.
+ */
 public final class WallSprite {
 
     private static final Tuple[] coordinates = {
@@ -33,6 +41,16 @@ public final class WallSprite {
             new Tuple(7, 4) // inner dTurn 23
     };
 
+    /**
+     * Builds and returns an array of wall sprites based on the coordinate list.
+     *
+     * <p>For each Tuple in {@code coordinates} this method calls
+     * {@code SpriteSheet.getSprite(t.first, t.second)} and collects the resulting
+     * {@code BufferedImage} into a new array.</p>
+     *
+     * @return a {@code BufferedImage[]} containing the wall sprites in the same
+     *         order as {@code coordinates}.
+     */
     private static BufferedImage[] getWalls() {
         ArrayList<BufferedImage> walls = new ArrayList<>();
         for (Tuple t : coordinates) {

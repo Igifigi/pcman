@@ -4,6 +4,15 @@ import java.awt.image.BufferedImage;
 
 import game.utils.EnemyType;
 
+/**
+ * Class that provides access to enemy sprites.
+ *
+ * <p>Use {@link #getSpriteByType(EnemyType)} to obtain the sprite associated with a
+ * particular {@link EnemyType}.
+ *
+ * @see EnemyType
+ * @see SpriteSheet
+ */
 public final class EnemySprite {
 
     public static final BufferedImage ARCH = SpriteSheet.getSprite(7, 3);

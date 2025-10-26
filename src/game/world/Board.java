@@ -1,5 +1,14 @@
 package game.world;
 
+/**
+ * Class containing the initial state of the game board.
+ * <p>
+ * {@link #map} describes which coordinates are accessible and which aren't.
+ * <p>
+ * {@link #walls} describes the wall types to be drawn at each coordinate.
+ * <p>
+ * {@link #orbs} describes whether an <b>orb</b> or <b>power orb</b> is present at given coordinates.
+ */
 public class Board {
     public static final int[][] map = {
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
