@@ -12,6 +12,17 @@ import game.utils.KeyboardManager;
 
 import java.util.ArrayList;
 
+/**
+ * Manages the main game logic, including the game loop, character updates,
+ * collision detection, and switching between game states (playing, win, loss).
+ *
+ * <p>
+ * This class implements {@link Runnable} to run the main game loop in a
+ * separate thread. It controls the flow of the game, updates the player
+ * and enemies, checks for win/loss conditions, and handles pauses or
+ * restarts after collisions.
+ * </p>
+ */
 public class GameEngine implements Runnable {
     private static final int FPS = Constants.FPS;
     // private static final int TPS = Constants.TPS;
@@ -25,6 +36,17 @@ public class GameEngine implements Runnable {
     private int tick = 0;
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
+    /**
+     * Creates a new GameEngine.
+     *
+     * <p>
+     * This sets up the game environment. It creates the main {@link GamePanel},
+     * adds it to the window ({@link GameFrame}), creates the player,
+     * and adds all the enemies to the game.
+     * </p>
+     *
+     * @param frame The main game window (GameFrame) that will hold the GamePanel.
+     */
     public GameEngine(GameFrame frame) {
         panel = new GamePanel(this);
         frame.add(panel);
@@ -44,6 +66,13 @@ public class GameEngine implements Runnable {
         panel.requestFocusInWindow();
     }
 
+    /**
+     * Starts the main game loop.
+     * <p>
+     * Resets the player's state, marks the game as 'running',
+     * and starts a new {@link Thread} to run the {@link #run()} method.
+     * </p>
+     */
     public void start() {
         Player.reset();
         running = true;
@@ -51,6 +80,15 @@ public class GameEngine implements Runnable {
         thread.start();
     }
 
+    /**
+     * Handles the logic for restarting a round after the player is hit.
+     *
+     * <p>
+     * This method pauses the game, makes the player take damage (lose health),
+     * moves the player and all enemies back to their starting positions,
+     * waits for 3 seconds, and then un-pauses the game.
+     * </p>
+     */
     public void restart() {
         paused = true;
         player.takeDamage();
@@ -70,6 +108,24 @@ public class GameEngine implements Runnable {
         paused = false;
     }
 
+    /**
+     * Checks if the player is colliding with any enemy and handles the outcome.
+     *
+     * <p>
+     * It loops through all enemies.
+     * <ul>
+     * <li>If the player is NOT powered-up and touches an enemy, it returns
+     * {@code true}
+     * (signaling that the player was hit).</li>
+     * <li>If the player IS powered-up and touches an enemy, it sends that enemy
+     * back to its starting position and returns {@code false} (player is
+     * safe).</li>
+     * </ul>
+     * </p>
+     *
+     * @return {@code true} if the player was hit by an enemy, {@code false}
+     *         otherwise.
+     */
     private boolean detectCollision() {
         for (Enemy enemy : enemies) {
             if (!player.isPoweredUp() && player.isCollidingWith(enemy)) {
@@ -83,10 +139,23 @@ public class GameEngine implements Runnable {
         return false;
     }
 
+    /**
+     * Gets the list of all enemies currently in the game.
+     *
+     * @return An {@link ArrayList} containing all {@link Enemy} objects.
+     */
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 
+    /**
+     * Stops the game and shows the "Win" screen.
+     *
+     * <p>
+     * This stops the game loop (sets {@code running} to false) and
+     * safely updates the game window to show the {@link WinPanel}.
+     * </p>
+     */
     public void performWinScreen() {
         running = false;
         javax.swing.SwingUtilities.invokeLater(() -> {
@@ -100,6 +169,14 @@ public class GameEngine implements Runnable {
         });
     }
 
+    /**
+     * Stops the game and shows the "Loss" screen.
+     *
+     * <p>
+     * This stops the game loop (sets {@code running} to false) and
+     * safely updates the game window to show the {@link LossPanel}.
+     * </p>
+     */
     public void performLossScreen() {
         running = false;
         javax.swing.SwingUtilities.invokeLater(() -> {
@@ -113,6 +190,24 @@ public class GameEngine implements Runnable {
         });
     }
 
+    /**
+     * The main game loop, which runs on a separate thread.
+     *
+     * <p>
+     * This method runs as long as the {@code running} flag is true.
+     * In each loop, it:
+     * <ul>
+     * <li>skips updates if the game is {@code paused},</li>
+     * <li>updates the player and enemies based on their update speed (TPS),</li>
+     * <li>checks for collisions (and calls {@link #restart()} if needed),</li>
+     * <li>checks if the player won (no orbs left),</li>
+     * <li>checks if the player lost (no health left),</li>
+     * <li>increments the game tick,</li>
+     * <li>tells the {@link GamePanel} to redraw itself,</li>
+     * <li>pauses briefly to maintain the target frames per second (FPS).</li>
+     * </ul>
+     * </p>
+     */
     @Override
     public void run() {
         while (running) {
