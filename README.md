@@ -20,7 +20,7 @@ You are PCMAN, and you must collect all the orbs on the map while being hunted b
 
 ## 🚀 How to run
 
-A runner script is provided to compile and launch the game.
+A runner script is provided to compile and launch the game. You need Java JDK >=21.
 
 1.  Make the script executable (for Linux/macOS only):
     ```bash
