@@ -14,6 +14,10 @@ import java.util.ArrayList;
  */
 public final class WallSprite {
 
+    /*
+     * dTurn = double turn
+     * LU, UR = LeftUp, UpRight etc.
+     */
     private static final Tuple[] coordinates = {
             new Tuple(4, 2), // turn LU 0
             new Tuple(5, 2), // turn UR 1
@@ -59,9 +63,15 @@ public final class WallSprite {
         return walls.toArray(new BufferedImage[0]);
     }
 
+    //List of wall sprites and the empty tile
     private static final BufferedImage[] WALLS = getWalls();
     public static final BufferedImage EMPTY_TILE = SpriteSheet.getSprite(15, 2);
 
+    /**
+     * Returns a {@code BufferedImage} sprite of the given {@code wallType}. For negative {@code wallType} return {@link #EMPTY_TILE}.
+     * @param wallType type of wall (0-23)
+     * @return {@code BufferedImage} sprite of type {@code wallType} or {@link #EMPTY_TILE}
+     */
     public static BufferedImage getWallTile(int wallType) {
         return (wallType < 0) ? EMPTY_TILE : WALLS[wallType];
     }
