@@ -45,10 +45,6 @@ public class Player extends Entity {
         return instance;
     }
 
-    public static void reset() {
-        instance = new Player();
-    }
-
     public int getWidth() {
         return size.first;
     }
