@@ -17,8 +17,27 @@ import javax.swing.SwingConstants;
 
 import game.utils.Utils;
 
+/**
+ * A {@link JPanel} that displays the "You Win" screen.
+ *
+ * <p>
+ * This panel is shown by the {@link game.engine.GameEngine} when
+ * the player collects all the orbs. It displays a congratulatory
+ * message and an "Exit" button to close the game.
+ * </p>
+ */
 public class WinPanel extends JPanel {
 
+    /**
+     * Creates the "You Win" victory panel.
+     *
+     * <p>
+     * This constructor sets up all the visual components, including
+     * labels for the victory message and a button to exit the application.
+     * </p>
+     *
+     * @param parentFrame - the main application window ({@link JFrame})
+     */
     public WinPanel(JFrame parentFrame) {
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());

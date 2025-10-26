@@ -12,6 +12,21 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 import game.engine.GameEngine;
 
+/**
+ * The main drawing area for the game.
+ *
+ * <p>
+ * This class extends {@link JPanel} and is responsible for rendering
+ * everything the player sees during gameplay. It draws the game board,
+ * the player, all enemies, and the score.
+ * </p>
+ *
+ * <p>
+ * The {@link GameEngine} calls {@code repaint()} on this panel in its
+ * game loop, which in turn calls the {@link #paintComponent(Graphics)}
+ * method.
+ * </p>
+ */
 public class GamePanel extends JPanel {
     private final Player player;
     private final GameEngine engine;
@@ -22,12 +37,36 @@ public class GamePanel extends JPanel {
     private int boardOffsetX;
     private int boardOffsetY;
 
+    /**
+     * Creates a new GamePanel.
+     *
+     * @param gameEngine - a reference to the main {@link GameEngine} (it is
+     *                   used to get the list of enemies to draw)
+     */
     public GamePanel(GameEngine gameEngine) {
         this.setBackground(Color.BLACK);
         player = Player.getInstance();
         this.engine = gameEngine;
     }
 
+    /**
+     * Draws the entire game state onto the panel.
+     *
+     * <p>
+     * This method is called automatically by Swing when the panel needs
+     * to be redrawn. It handles:
+     * <ul>
+     * <li>clearing the screen and drawing the black background,</li>
+     * <li>calculating the correct offsets to center the game board,</li>
+     * <li>drawing the score,</li>
+     * <li>drawing every tile of the game board (walls and orbs),</li>
+     * <li>drawing the player's animated sprite,</li>
+     * <li>drawing all enemy sprites.</li>
+     * </ul>
+     * </p>
+     *
+     * @param g - the {@link Graphics} object provided by Swing for drawing
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

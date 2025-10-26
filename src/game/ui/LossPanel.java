@@ -17,8 +17,27 @@ import javax.swing.SwingConstants;
 
 import game.utils.Utils;
 
+/**
+ * A {@link JPanel} that displays the "Game Over" screen.
+ *
+ * <p>
+ * This panel is shown by the {@link game.engine.GameEngine} when
+ * the player's health reaches zero. It displays a "GAME OVER" message
+ * and an "Exit" button to close the game.
+ * </p>
+ */
 public class LossPanel extends JPanel {
 
+    /**
+     * Creates the "Game Over" loss panel.
+     *
+     * <p>
+     * This constructor sets up all the visual components, including
+     * labels for the loss message and a button to exit the application.
+     * </p>
+     *
+     * @param parentFrame - the main application window ({@link JFrame})
+     */
     public LossPanel(JFrame parentFrame) {
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
