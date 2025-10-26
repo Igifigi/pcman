@@ -74,7 +74,6 @@ public class GameEngine implements Runnable {
      * </p>
      */
     public void start() {
-        Player.reset();
         running = true;
         thread = new Thread(this);
         thread.start();
