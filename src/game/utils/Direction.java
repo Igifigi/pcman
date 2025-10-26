@@ -3,8 +3,10 @@ package game.utils;
 /**
  * Enumeration defining movement directions as Tuples.
  * <p>
- * Entities can move in 4 cardinal directions on the map. 
- * This enum defines those directions as Tuples that can be interpreted into movement or facing direction.
+ * Entities can move in 4 cardinal directions on the map.
+ * This enum defines those directions as Tuples that can be interpreted into
+ * movement or facing direction.
+ * 
  * @see game.entities.Entity
  * @see game.entities.Player
  * @see game.entities.Enemy

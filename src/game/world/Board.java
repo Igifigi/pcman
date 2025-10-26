@@ -7,7 +7,8 @@ package game.world;
  * <p>
  * {@link #walls} describes the wall types to be drawn at each coordinate.
  * <p>
- * {@link #orbs} describes whether an <b>orb</b> or <b>power orb</b> is present at given coordinates.
+ * {@link #orbs} describes whether an <b>orb</b> or <b>power orb</b> is present
+ * at given coordinates.
  */
 public class Board {
     public static final int[][] map = {

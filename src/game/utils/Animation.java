@@ -7,12 +7,16 @@ import java.util.List;
 /**
  * Class for a frame-based animation composed of BufferedImage frames.
  *
- * <p>This class stores an ordered list of frames and advances the displayed frame
+ * <p>
+ * This class stores an ordered list of frames and advances the displayed frame
  * as update() is called. Each frame is displayed for {@link #frameDelay} ticks.
  * When the last frame has been shown, the animation wraps back to the
- * first frame.</p>
+ * first frame.
+ * </p>
  *
- * <p>Usage example:
+ * <p>
+ * Usage example:
+ * 
  * <pre>
  * BufferedImage[] frames = ...;
  * Animation anim = new Animation(frames, 5); // each frame shown for 5 update calls
@@ -35,7 +39,7 @@ public class Animation {
     /**
      * Creates a new animation.
      * 
-     * @param frames - list of BufferedImages to be displayed in sequence
+     * @param frames     - list of BufferedImages to be displayed in sequence
      * @param frameDelay - how long to display each frame
      */
     public Animation(BufferedImage[] frames, int frameDelay) {
@@ -64,9 +68,11 @@ public class Animation {
     /**
      * Updates the animation.
      * <p>
-     * If {@link #frameDelay} ticks (update() calls) have passed, advance to the next frame.
+     * If {@link #frameDelay} ticks (update() calls) have passed, advance to the
+     * next frame.
      * <p>
-     * If the last frame is reached, go back to the first after {@link #frameDelay} ticks.
+     * If the last frame is reached, go back to the first after {@link #frameDelay}
+     * ticks.
      */
     public void update() {
         if (!stopped) {

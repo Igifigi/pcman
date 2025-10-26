@@ -5,7 +5,10 @@ import java.awt.image.BufferedImage;
 /**
  * Class that provides access to orb-related sprites.
  * <p>
- * Sprites are obtained from {@code SpriteSheet.getSprite(...)} at class load time.
+ * Sprites are obtained from {@code SpriteSheet.getSprite(...)} at class load
+ * time.
+ * </p>
+ * 
  * @see SpriteSheet
  */
 public final class OrbSprite {

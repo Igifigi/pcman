@@ -7,10 +7,13 @@ import java.util.ArrayList;
 /**
  * Class that maps wall types to sprite-sheet images.
  *
- * <p>Usage:
+ * <p>
+ * Usage:
  * Wall types correspond to the order of entries in the coordinates array.
- * Call {@code getWallTile(wallType)} to obtain the {@link BufferedImage} for a given wall type. If {@link #wallType} is
- *   negative, {@link #EMPTY_TILE} is returned.
+ * Call {@code getWallTile(wallType)} to obtain the {@link BufferedImage} for a
+ * given wall type. If {@link #wallType} is
+ * negative, {@link #EMPTY_TILE} is returned.
+ * </p>
  */
 public final class WallSprite {
 
@@ -48,9 +51,11 @@ public final class WallSprite {
     /**
      * Builds and returns an array of wall sprites based on the coordinate list.
      *
-     * <p>For each Tuple in {@code coordinates} this method calls
+     * <p>
+     * For each Tuple in {@code coordinates} this method calls
      * {@code SpriteSheet.getSprite(t.first, t.second)} and collects the resulting
-     * {@code BufferedImage} into a new array.</p>
+     * {@code BufferedImage} into a new array.
+     * </p>
      *
      * @return a {@code BufferedImage[]} containing the wall sprites in the same
      *         order as {@code coordinates}.
@@ -63,14 +68,17 @@ public final class WallSprite {
         return walls.toArray(new BufferedImage[0]);
     }
 
-    //List of wall sprites and the empty tile
+    // List of wall sprites and the empty tile
     private static final BufferedImage[] WALLS = getWalls();
     public static final BufferedImage EMPTY_TILE = SpriteSheet.getSprite(15, 2);
 
     /**
-     * Returns a {@code BufferedImage} sprite of the given {@code wallType}. For negative {@code wallType} return {@link #EMPTY_TILE}.
+     * Returns a {@code BufferedImage} sprite of the given {@code wallType}. For
+     * negative {@code wallType} return {@link #EMPTY_TILE}.
+     * 
      * @param wallType type of wall (0-23)
-     * @return {@code BufferedImage} sprite of type {@code wallType} or {@link #EMPTY_TILE}
+     * @return {@code BufferedImage} sprite of type {@code wallType} or
+     *         {@link #EMPTY_TILE}
      */
     public static BufferedImage getWallTile(int wallType) {
         return (wallType < 0) ? EMPTY_TILE : WALLS[wallType];

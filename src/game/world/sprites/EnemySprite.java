@@ -7,8 +7,9 @@ import game.utils.EnemyType;
 /**
  * Class that provides access to enemy sprites.
  *
- * <p>Use {@link #getSpriteByType(EnemyType)} to obtain the sprite associated with a
- * particular {@link EnemyType}.
+ * <p>
+ * Use {@link #getSpriteByType(EnemyType)} to obtain the sprite associated with
+ * a particular {@link EnemyType}.
  *
  * @see EnemyType
  * @see SpriteSheet
